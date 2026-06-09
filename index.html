@@ -27,10 +27,10 @@ const SCALES={"Pentatonic Minor":[0,3,5,7,10],"Pentatonic Major":[0,2,4,7,9],"Bl
 const CHORD_IVS={"Pentatonic Minor":[0,3,7],"Blues":[0,3,7],"Natural Minor":[0,3,7],"Dorian":[0,3,7],"Pentatonic Major":[0,4,7],"Major":[0,4,7],"Mixolydian":[0,4,10]};
 const CHORD_LABEL={"Pentatonic Minor":"m","Blues":"m","Natural Minor":"m","Dorian":"m","Pentatonic Major":"","Major":"","Mixolydian":"7"};
 const THEMES=[
-  {id:"ebony",name:"Ebony",swatch:"#c8b87a",accent:"#c8b87a",scaleFg:"#5aaa7a",scaleBg:"#0e2016",scaleBorder:"#1e4028",natFg:"#d0a850",natBg:"#1e1508",sharpFg:"#5878b8",sharpBg:"#0e1228",desc:"dark wood · gold hardware"},
-  {id:"ocean",name:"Ocean",swatch:"#48b0e0",accent:"#48b0e0",scaleFg:"#48b0e0",scaleBg:"#071428",scaleBorder:"#183858",natFg:"#7090b8",natBg:"#0a1220",sharpFg:"#405898",sharpBg:"#080e1c",desc:"deep blue · electric"},
-  {id:"ember",name:"Ember",swatch:"#e07040",accent:"#e07040",scaleFg:"#e09050",scaleBg:"#1e0c04",scaleBorder:"#502808",natFg:"#c89060",natBg:"#1c1008",sharpFg:"#906040",sharpBg:"#140e08",desc:"dark wood · warm orange"},
-  {id:"amethyst",name:"Amethyst",swatch:"#b070e0",accent:"#b070e0",scaleFg:"#a060d0",scaleBg:"#100820",scaleBorder:"#381858",natFg:"#9080c0",natBg:"#100c1c",sharpFg:"#504098",sharpBg:"#0c0818",desc:"deep purple · electric"},
+  {id:"ebony",name:"Ebony",swatch:"#c8b87a",accent:"#c8b87a",scaleFg:"#c0f0d4",scaleBg:"#0e2016",scaleBorder:"#1e4028",natFg:"#d0a850",natBg:"#1e1508",sharpFg:"#5878b8",sharpBg:"#0e1228",desc:"dark wood · gold hardware"},
+  {id:"ocean",name:"Ocean",swatch:"#48b0e0",accent:"#48b0e0",scaleFg:"#a8dcf8",scaleBg:"#071428",scaleBorder:"#183858",natFg:"#7090b8",natBg:"#0a1220",sharpFg:"#405898",sharpBg:"#080e1c",desc:"deep blue · electric"},
+  {id:"ember",name:"Ember",swatch:"#e07040",accent:"#e07040",scaleFg:"#f5c890",scaleBg:"#1e0c04",scaleBorder:"#502808",natFg:"#c89060",natBg:"#1c1008",sharpFg:"#906040",sharpBg:"#140e08",desc:"dark wood · warm orange"},
+  {id:"amethyst",name:"Amethyst",swatch:"#b070e0",accent:"#b070e0",scaleFg:"#d8aafc",scaleBg:"#100820",scaleBorder:"#381858",natFg:"#9080c0",natBg:"#100c1c",sharpFg:"#504098",sharpBg:"#0c0818",desc:"deep purple · electric"},
 ];
 const ni=(r,iv)=>NOTES[(NOTES.indexOf(r)+iv)%12];
 const COACH_TIPS={
@@ -303,7 +303,7 @@ function GuitarApp(){
 
       <div style={{borderTop:"1px solid #141414",padding:"7px 20px",display:"flex",gap:10,alignItems:"flex-start",background:"#080808",flexShrink:0,minHeight:36}}>
         <div style={{fontSize:"8px",color:"#777",letterSpacing:2,paddingTop:2,flexShrink:0,fontFamily:"'Courier New',monospace",minWidth:40}}>COACH</div>
-        <div style={{fontSize:"10px",color:"#aaa",lineHeight:1.6,fontStyle:"italic",fontFamily:"'Courier New',monospace"}}>{coachText}</div>
+        <div style={{fontSize:"10px",color:"#d0ccbc",lineHeight:1.6,fontStyle:"italic",fontFamily:"'Courier New',monospace"}}>{coachText}</div>
       </div>
 
       <WaitlistStrip accent={t.accent}/>
