@@ -271,7 +271,7 @@ function GuitarApp(){
             <div style={{minWidth:(NUM_FRETS+1)*FW+44,position:"relative"}}>
               <div style={{display:"flex",paddingLeft:40,marginBottom:3}}>
                 {Array.from({length:NUM_FRETS+1},(_,f)=>(
-                  <div key={f} style={{width:FW,flexShrink:0,textAlign:"center",fontSize:"8px",color:DOT.has(f)?"#c8b87a":"#444",fontWeight:DOT.has(f)?700:400}}>{f===0?"○":f}</div>
+                  <div key={f} style={{width:FW,flexShrink:0,textAlign:"center",fontSize:"8px",color:DOT.has(f)?"#c8b87a":"#888",fontWeight:DOT.has(f)?700:400}}>{f===0?"○":f}</div>
                 ))}
               </div>
               {OPEN.map((_,si)=>(
