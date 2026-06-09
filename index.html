@@ -132,19 +132,31 @@ function WaitlistStrip({accent}){
   );
 }
 
-function PremiumModal({onClose,accent}){
-  const GUMROAD="https://tonecrafted.com";
-  const features=["Personalized tips that adapt to your accuracy & weak spots","Real-time AI feedback on your training sessions","Custom lick & solo generation in any key","AI Coach answers any guitar theory question instantly","Practice routines built around your goals"];
+function WaitlistModal({onClose,accent}){
+  const [wlEmail,setWlEmail]=useState("");
+  const [wlStatus,setWlStatus]=useState("idle");
+  async function wlSubmit(e){
+    e.preventDefault();
+    if(!wlEmail.trim()) return;
+    setWlStatus("loading");
+    try{
+      const res=await fetch(`${SUPABASE_URL}/rest/v1/waitlist`,{method:"POST",headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${SUPABASE_KEY}`,"Content-Type":"application/json",Prefer:"return=minimal"},body:JSON.stringify({email:wlEmail.trim(),product:"fretboard-ai",source:"modal"})});
+      if(res.status===409){setWlStatus("dupe");return;}
+      if(!res.ok){setWlStatus("error");return;}
+      setWlStatus("success");
+    }catch{setWlStatus("error");}
+  }
+  const features=["AI practice plans that adapt to YOUR weak spots — not generic exercises","Real-time feedback as you play, not after","Custom lick & solo generation in any key, any scale","Progress tracking, streaks, and jam track pairings","Founder pricing locked in forever — never pay full price"];
   return (
-    <div style={{position:"fixed",inset:0,zIndex:9999,background:"rgba(0,0,0,0.82)",display:"flex",alignItems:"center",justifyContent:"center",padding:"20px",backdropFilter:"blur(8px)"}}>
+    <div style={{position:"fixed",inset:0,zIndex:9999,background:"rgba(0,0,0,0.85)",display:"flex",alignItems:"center",justifyContent:"center",padding:"20px",backdropFilter:"blur(8px)"}}>
       <div style={{background:"rgba(12,10,8,0.98)",border:`1px solid ${accent}50`,borderRadius:16,padding:"32px 36px",maxWidth:460,width:"100%",position:"relative"}}>
         <button onClick={onClose} style={{position:"absolute",top:12,right:14,background:"none",border:"none",cursor:"pointer",color:"#555",fontSize:18,lineHeight:1,padding:"2px 6px"}}>✕</button>
         <div style={{textAlign:"center",marginBottom:16}}>
-          <div style={{fontSize:36,marginBottom:6}}>🎸</div>
-          <div style={{display:"inline-block",background:`${accent}22`,border:`1px solid ${accent}55`,color:accent,fontSize:"9px",letterSpacing:2,fontWeight:700,padding:"3px 10px",borderRadius:20,fontFamily:"'Courier New',monospace"}}>PREMIUM AI TRAINER</div>
+          <div style={{fontSize:36,marginBottom:6}}>🌱</div>
+          <div style={{display:"inline-block",background:`${accent}22`,border:`1px solid ${accent}55`,color:accent,fontSize:"9px",letterSpacing:2,fontWeight:700,padding:"3px 10px",borderRadius:20,fontFamily:"'Courier New',monospace"}}>JOIN THE WAITLIST</div>
         </div>
-        <div style={{fontSize:20,fontWeight:700,color:"#e8e0d0",textAlign:"center",marginBottom:8,lineHeight:1.25}}>Your Personal Guitar Coach, Powered by AI</div>
-        <p style={{color:"#777",lineHeight:1.7,textAlign:"center",marginBottom:20,fontSize:12}}>Unlock personalized practice tips, real-time AI feedback, and custom lick generation.</p>
+        <div style={{fontSize:20,fontWeight:700,color:"#e8e0d0",textAlign:"center",marginBottom:8,lineHeight:1.25}}>The Full AI Coach is Coming</div>
+        <p style={{color:"#bbb",lineHeight:1.7,textAlign:"center",marginBottom:20,fontSize:12}}>Be first in line for the most personal guitar training tool ever built. Founder spots are limited — lock yours in now.</p>
         <div style={{marginBottom:22,padding:"14px 16px",background:"rgba(255,255,255,0.03)",borderRadius:8,border:"1px solid rgba(255,255,255,0.06)"}}>
           {features.map((f,i)=>(
             <div key={i} style={{display:"flex",gap:10,marginBottom:i<features.length-1?8:0,alignItems:"flex-start"}}>
@@ -153,7 +165,23 @@ function PremiumModal({onClose,accent}){
             </div>
           ))}
         </div>
-        <a href={GUMROAD} target="_blank" rel="noopener noreferrer" style={{display:"block",textAlign:"center",background:accent,color:"#111",padding:"13px 28px",borderRadius:8,fontWeight:700,fontSize:14,textDecoration:"none",letterSpacing:"0.5px",marginBottom:12,fontFamily:"'Courier New',monospace"}}>Get Premium Access →</a>
+        {wlStatus==="success"?(
+          <div style={{textAlign:"center",padding:"16px",marginBottom:12}}>
+            <div style={{fontSize:28,marginBottom:8}}>🌱</div>
+            <div style={{fontSize:14,fontWeight:700,color:"#e8e0d0",marginBottom:4}}>You're in.</div>
+            <div style={{fontSize:11,color:"#888",fontFamily:"'Courier New',monospace"}}>We'll reach out the moment it drops. No spam — ever.</div>
+          </div>
+        ):(
+          <form onSubmit={wlSubmit} style={{marginBottom:12}}>
+            <div style={{display:"flex",gap:6,alignItems:"center",marginBottom:6}}>
+              <input type="email" value={wlEmail} onChange={e=>setWlEmail(e.target.value)} placeholder="your email — lock in early access" disabled={wlStatus==="loading"} required style={{flex:1,background:"#0d0d0d",border:`1px solid ${wlStatus==="error"?"#6b2020":"#2a2a2a"}`,borderRadius:4,color:"#d4c9a8",padding:"10px 14px",fontSize:"11px",fontFamily:"'Courier New',monospace",outline:"none",minWidth:0}}/>
+              <button type="submit" disabled={wlStatus==="loading"} style={{padding:"10px 16px",borderRadius:4,border:`1px solid ${accent}`,background:accent,color:"#111",fontSize:"11px",cursor:"pointer",fontFamily:"'Courier New',monospace",letterSpacing:1,flexShrink:0,fontWeight:700,opacity:wlStatus==="loading"?0.5:1}}>{wlStatus==="loading"?"···":"JOIN →"}</button>
+            </div>
+            {wlStatus==="dupe"&&<div style={{fontSize:"10px",color:"#888",fontFamily:"'Courier New',monospace",textAlign:"center"}}>Already on the list. You're good. ✓</div>}
+            {wlStatus==="error"&&<div style={{fontSize:"10px",color:"#7a2020",fontFamily:"'Courier New',monospace",textAlign:"center"}}>Something went wrong — try again.</div>}
+            <div style={{marginTop:6,fontSize:"9px",color:"#444",fontFamily:"'Courier New',monospace",textAlign:"center"}}>No spam. Unsubscribe anytime. Your email is never shared.</div>
+          </form>
+        )}
         <div style={{textAlign:"center"}}><button onClick={onClose} style={{background:"none",border:"none",cursor:"pointer",color:"#444",fontSize:11,fontFamily:"'Courier New',monospace"}}>Continue with free fretboard</button></div>
       </div>
     </div>
@@ -201,12 +229,12 @@ function GuitarApp(){
 
   return (
     <div style={{fontFamily:"'Courier New',monospace",background:"#0a0a0a",minHeight:"100vh",color:"#d4c9a8",display:"flex",flexDirection:"column"}}>
-      {showPremium&&<PremiumModal onClose={()=>setPremium(false)} accent={t.accent}/>}
+      {showPremium&&<WaitlistModal onClose={()=>setPremium(false)} accent={t.accent}/>}
 
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 20px 8px",borderBottom:"1px solid #181818",flexShrink:0}}>
         <div style={{display:"flex",alignItems:"baseline",gap:10}}>
           <span style={{fontSize:16,fontWeight:700,color:t.accent,letterSpacing:2}}>FRETBOARD AI</span>
-          <span style={{fontSize:"9px",color:"#888",letterSpacing:1}}>Standard Tuning · E A D G B e</span>
+          <span style={{fontSize:"9px",color:"#aaa",letterSpacing:1}}>Standard Tuning · E A D G B e</span>
         </div>
         <div style={{display:"flex",alignItems:"center",gap:8}}>
           <div style={{display:"flex",gap:4,alignItems:"center"}}>
@@ -227,7 +255,7 @@ function GuitarApp(){
         <div style={{padding:"8px 20px 6px",borderBottom:"1px solid #141414",flexShrink:0}}>
           <div style={{display:"flex",flexDirection:"column",gap:8}}>
             <div>
-              <div style={{fontSize:"8px",color:"#aaa",letterSpacing:2,marginBottom:4}}>KEY</div>
+              <div style={{fontSize:"10px",color:"#ccc",letterSpacing:2,marginBottom:4}}>KEY</div>
               <div style={{display:"flex",gap:3,flexWrap:"wrap",maxWidth:500}}>
                 {NOTES.map(n=>(
                   <button key={n} onClick={()=>setRoot(n)} style={{width:27,height:27,borderRadius:2,border:"none",cursor:"pointer",background:root===n?t.accent:"#141414",color:root===n?"#111":"#aaa",fontSize:n.includes("#")?"6.5px":"10px",fontWeight:root===n?700:400,fontFamily:"inherit"}}>{n}</button>
@@ -235,10 +263,10 @@ function GuitarApp(){
               </div>
             </div>
             <div>
-              <div style={{fontSize:"8px",color:"#aaa",letterSpacing:2,marginBottom:4}}>SCALE{scale===null&&<span style={{color:"#555",fontWeight:400,letterSpacing:0,fontSize:"7px"}}> · none selected</span>}</div>
+              <div style={{fontSize:"10px",color:"#ccc",letterSpacing:2,marginBottom:4}}>SCALE{scale===null&&<span style={{color:"#555",fontWeight:400,letterSpacing:0,fontSize:"7px"}}> · none selected</span>}</div>
               <div style={{display:"flex",gap:3,flexWrap:"wrap"}}>
                 {Object.keys(SCALES).map(s=>(
-                  <button key={s} onClick={()=>setSc(s===scale?null:s)} style={{padding:"2px 8px",border:"none",cursor:"pointer",borderRadius:2,background:scale===s?t.scaleBg:"#141414",color:scale===s?t.scaleFg:"#999",fontSize:"9px",fontFamily:"inherit",fontWeight:scale===s?700:400,outline:scale===s?`1px solid ${t.scaleBorder}`:"none"}}>{s}</button>
+                  <button key={s} onClick={()=>setSc(s===scale?null:s)} style={{padding:"2px 8px",border:"none",cursor:"pointer",borderRadius:2,background:scale===s?t.scaleBg:"#141414",color:scale===s?t.scaleFg:"#aaa",fontSize:"9px",fontFamily:"inherit",fontWeight:scale===s?700:400,outline:scale===s?`1px solid ${t.scaleBorder}`:"none"}}>{s}</button>
                 ))}
               </div>
             </div>
@@ -257,7 +285,7 @@ function GuitarApp(){
       )}
 
       {tab==="scale"&&(
-        <div style={{padding:"3px 20px",fontSize:"8px",color:"#999",letterSpacing:"0.8px",flexShrink:0,display:"flex",justifyContent:"space-between"}}>
+        <div style={{padding:"3px 20px",fontSize:"8px",color:"#aaa",letterSpacing:"0.8px",flexShrink:0,display:"flex",justifyContent:"space-between"}}>
           <span>← scroll for full 24-fret neck · O = open · gold bar = NUT</span>
           {noteView==="all"&&<span style={{color:"#6aaa6a"}}>ALL NOTES — gold=root · green=natural · blue=sharp/flat</span>}
           {noteView==="natural"&&<span style={{color:"#6aaa6a"}}>NATURALS — A B C D E F G only · gold=root</span>}
@@ -271,12 +299,12 @@ function GuitarApp(){
             <div style={{minWidth:(NUM_FRETS+1)*FW+44,position:"relative"}}>
               <div style={{display:"flex",paddingLeft:40,marginBottom:3}}>
                 {Array.from({length:NUM_FRETS+1},(_,f)=>(
-                  <div key={f} style={{width:FW,flexShrink:0,textAlign:"center",fontSize:"8px",color:DOT.has(f)?"#c8b87a":"#aaa",fontWeight:DOT.has(f)?700:400}}>{f===0?"○":f}</div>
+                  <div key={f} style={{width:FW,flexShrink:0,textAlign:"center",fontSize:"9px",color:DOT.has(f)?"#c8b87a":"#bbb",fontWeight:DOT.has(f)?700:400}}>{f===0?"○":f}</div>
                 ))}
               </div>
               {OPEN.map((_,si)=>(
                 <div key={si} style={{display:"flex",alignItems:"center",height:SH}}>
-                  <div style={{width:40,fontSize:"9px",color:"#aaa",textAlign:"right",paddingRight:8,flexShrink:0,letterSpacing:1}}>{SNAMES[si]}</div>
+                  <div style={{width:40,fontSize:"11px",color:"#bbb",textAlign:"right",paddingRight:8,flexShrink:0,letterSpacing:1}}>{SNAMES[si]}</div>
                   {Array.from({length:NUM_FRETS+1},(_,fret)=>{
                     const {bg,fg,ring,size,shape,label}=getDotStyle(si,fret);
                     const br=shape==="square"?3:size/2;
@@ -302,7 +330,7 @@ function GuitarApp(){
       </div>
 
       <div style={{borderTop:"1px solid #141414",padding:"7px 20px",display:"flex",gap:10,alignItems:"flex-start",background:"#080808",flexShrink:0,minHeight:36}}>
-        <div style={{fontSize:"8px",color:"#999",letterSpacing:2,paddingTop:2,flexShrink:0,fontFamily:"'Courier New',monospace",minWidth:40}}>COACH</div>
+        <div style={{fontSize:"8px",color:"#bbb",letterSpacing:2,paddingTop:2,flexShrink:0,fontFamily:"'Courier New',monospace",minWidth:40}}>COACH</div>
         <div style={{fontSize:"10px",color:"#d0ccbc",lineHeight:1.6,fontStyle:"italic",fontFamily:"'Courier New',monospace"}}>{coachText}</div>
       </div>
 
