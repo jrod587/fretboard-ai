@@ -206,7 +206,7 @@ function GuitarApp(){
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 20px 8px",borderBottom:"1px solid #181818",flexShrink:0}}>
         <div style={{display:"flex",alignItems:"baseline",gap:10}}>
           <span style={{fontSize:16,fontWeight:700,color:t.accent,letterSpacing:2}}>FRETBOARD AI</span>
-          <span style={{fontSize:"9px",color:"#666",letterSpacing:1}}>Standard Tuning · E A D G B e</span>
+          <span style={{fontSize:"9px",color:"#888",letterSpacing:1}}>Standard Tuning · E A D G B e</span>
         </div>
         <div style={{display:"flex",alignItems:"center",gap:8}}>
           <div style={{display:"flex",gap:4,alignItems:"center"}}>
@@ -227,37 +227,37 @@ function GuitarApp(){
         <div style={{padding:"8px 20px 6px",borderBottom:"1px solid #141414",flexShrink:0}}>
           <div style={{display:"flex",flexDirection:"column",gap:8}}>
             <div>
-              <div style={{fontSize:"8px",color:"#888",letterSpacing:2,marginBottom:4}}>KEY</div>
+              <div style={{fontSize:"8px",color:"#aaa",letterSpacing:2,marginBottom:4}}>KEY</div>
               <div style={{display:"flex",gap:3,flexWrap:"wrap",maxWidth:500}}>
                 {NOTES.map(n=>(
-                  <button key={n} onClick={()=>setRoot(n)} style={{width:27,height:27,borderRadius:2,border:"none",cursor:"pointer",background:root===n?t.accent:"#141414",color:root===n?"#111":"#888",fontSize:n.includes("#")?"6.5px":"10px",fontWeight:root===n?700:400,fontFamily:"inherit"}}>{n}</button>
+                  <button key={n} onClick={()=>setRoot(n)} style={{width:27,height:27,borderRadius:2,border:"none",cursor:"pointer",background:root===n?t.accent:"#141414",color:root===n?"#111":"#aaa",fontSize:n.includes("#")?"6.5px":"10px",fontWeight:root===n?700:400,fontFamily:"inherit"}}>{n}</button>
                 ))}
               </div>
             </div>
             <div>
-              <div style={{fontSize:"8px",color:"#888",letterSpacing:2,marginBottom:4}}>SCALE{scale===null&&<span style={{color:"#555",fontWeight:400,letterSpacing:0,fontSize:"7px"}}> · none selected</span>}</div>
+              <div style={{fontSize:"8px",color:"#aaa",letterSpacing:2,marginBottom:4}}>SCALE{scale===null&&<span style={{color:"#555",fontWeight:400,letterSpacing:0,fontSize:"7px"}}> · none selected</span>}</div>
               <div style={{display:"flex",gap:3,flexWrap:"wrap"}}>
                 {Object.keys(SCALES).map(s=>(
-                  <button key={s} onClick={()=>setSc(s===scale?null:s)} style={{padding:"2px 8px",border:"none",cursor:"pointer",borderRadius:2,background:scale===s?t.scaleBg:"#141414",color:scale===s?t.scaleFg:"#777",fontSize:"9px",fontFamily:"inherit",fontWeight:scale===s?700:400,outline:scale===s?`1px solid ${t.scaleBorder}`:"none"}}>{s}</button>
+                  <button key={s} onClick={()=>setSc(s===scale?null:s)} style={{padding:"2px 8px",border:"none",cursor:"pointer",borderRadius:2,background:scale===s?t.scaleBg:"#141414",color:scale===s?t.scaleFg:"#999",fontSize:"9px",fontFamily:"inherit",fontWeight:scale===s?700:400,outline:scale===s?`1px solid ${t.scaleBorder}`:"none"}}>{s}</button>
                 ))}
               </div>
             </div>
             <div style={{display:"flex",flexWrap:"wrap",gap:4,alignItems:"center"}}>
-              <button onClick={()=>setNm(x=>!x)} style={{padding:"2px 8px",border:`1px solid ${names?t.accent+"44":"#222"}`,background:"transparent",color:names?t.accent:"#666",cursor:"pointer",borderRadius:2,fontSize:"8px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap"}}>{names?"NAMES ON":"NAMES OFF"}</button>
-              <button onClick={()=>setIv(x=>!x)} style={{padding:"2px 8px",border:`1px solid ${showIv?t.accent+"44":"#222"}`,background:"transparent",color:showIv?t.accent:"#666",cursor:"pointer",borderRadius:2,fontSize:"8px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap"}}>INTERVALS {showIv?"ON":"OFF"}</button>
+              <button onClick={()=>setNm(x=>!x)} style={{padding:"2px 8px",border:`1px solid ${names?t.accent+"44":"#222"}`,background:"transparent",color:names?t.accent:"#888",cursor:"pointer",borderRadius:2,fontSize:"8px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap"}}>{names?"NAMES ON":"NAMES OFF"}</button>
+              <button onClick={()=>setIv(x=>!x)} style={{padding:"2px 8px",border:`1px solid ${showIv?t.accent+"44":"#222"}`,background:"transparent",color:showIv?t.accent:"#888",cursor:"pointer",borderRadius:2,fontSize:"8px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap"}}>INTERVALS {showIv?"ON":"OFF"}</button>
               <button onClick={()=>setPremium(true)} style={{padding:"2px 8px",border:"1px solid #222",background:"transparent",color:"#555",cursor:"pointer",borderRadius:2,fontSize:"8px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:4}}><span style={{fontSize:"7px"}}>🔒</span>CAGED BOXES</button>
               <button onClick={()=>setPremium(true)} style={{padding:"2px 8px",border:"1px solid #222",background:"transparent",color:"#555",cursor:"pointer",borderRadius:2,fontSize:"8px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:4}}><span style={{fontSize:"7px"}}>🔒</span>CHORD MAP</button>
               <div style={{width:"100%",height:1,background:"#1a1a1a",margin:"1px 0"}}/>
-              <button onClick={()=>setNV(v=>v==="all"?null:"all")} style={{padding:"2px 8px",border:`1px solid ${noteView==="all"?t.natFg+"44":"#222"}`,background:noteView==="all"?t.natBg:"transparent",color:noteView==="all"?t.natFg:"#666",cursor:"pointer",borderRadius:2,fontSize:"8px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap"}}>ALL NOTES</button>
-              <button onClick={()=>setNV(v=>v==="natural"?null:"natural")} style={{padding:"2px 8px",border:`1px solid ${noteView==="natural"?t.natFg+"44":"#222"}`,background:noteView==="natural"?t.natBg:"transparent",color:noteView==="natural"?t.natFg:"#666",cursor:"pointer",borderRadius:2,fontSize:"8px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap"}}>NATURALS</button>
-              <button onClick={()=>setNV(v=>v==="bare"?null:"bare")} style={{padding:"2px 8px",border:`1px solid ${noteView==="bare"?"#55555544":"#222"}`,background:noteView==="bare"?"#111":"transparent",color:noteView==="bare"?"#888":"#666",cursor:"pointer",borderRadius:2,fontSize:"8px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap"}}>BARE</button>
+              <button onClick={()=>setNV(v=>v==="all"?null:"all")} style={{padding:"2px 8px",border:`1px solid ${noteView==="all"?t.natFg+"44":"#222"}`,background:noteView==="all"?t.natBg:"transparent",color:noteView==="all"?t.natFg:"#888",cursor:"pointer",borderRadius:2,fontSize:"8px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap"}}>ALL NOTES</button>
+              <button onClick={()=>setNV(v=>v==="natural"?null:"natural")} style={{padding:"2px 8px",border:`1px solid ${noteView==="natural"?t.natFg+"44":"#222"}`,background:noteView==="natural"?t.natBg:"transparent",color:noteView==="natural"?t.natFg:"#888",cursor:"pointer",borderRadius:2,fontSize:"8px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap"}}>NATURALS</button>
+              <button onClick={()=>setNV(v=>v==="bare"?null:"bare")} style={{padding:"2px 8px",border:`1px solid ${noteView==="bare"?"#55555544":"#222"}`,background:noteView==="bare"?"#111":"transparent",color:noteView==="bare"?"#aaa":"#888",cursor:"pointer",borderRadius:2,fontSize:"8px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap"}}>BARE</button>
             </div>
           </div>
         </div>
       )}
 
       {tab==="scale"&&(
-        <div style={{padding:"3px 20px",fontSize:"8px",color:"#777",letterSpacing:"0.8px",flexShrink:0,display:"flex",justifyContent:"space-between"}}>
+        <div style={{padding:"3px 20px",fontSize:"8px",color:"#999",letterSpacing:"0.8px",flexShrink:0,display:"flex",justifyContent:"space-between"}}>
           <span>← scroll for full 24-fret neck · O = open · gold bar = NUT</span>
           {noteView==="all"&&<span style={{color:"#6aaa6a"}}>ALL NOTES — gold=root · green=natural · blue=sharp/flat</span>}
           {noteView==="natural"&&<span style={{color:"#6aaa6a"}}>NATURALS — A B C D E F G only · gold=root</span>}
@@ -271,12 +271,12 @@ function GuitarApp(){
             <div style={{minWidth:(NUM_FRETS+1)*FW+44,position:"relative"}}>
               <div style={{display:"flex",paddingLeft:40,marginBottom:3}}>
                 {Array.from({length:NUM_FRETS+1},(_,f)=>(
-                  <div key={f} style={{width:FW,flexShrink:0,textAlign:"center",fontSize:"8px",color:DOT.has(f)?"#c8b87a":"#888",fontWeight:DOT.has(f)?700:400}}>{f===0?"○":f}</div>
+                  <div key={f} style={{width:FW,flexShrink:0,textAlign:"center",fontSize:"8px",color:DOT.has(f)?"#c8b87a":"#aaa",fontWeight:DOT.has(f)?700:400}}>{f===0?"○":f}</div>
                 ))}
               </div>
               {OPEN.map((_,si)=>(
                 <div key={si} style={{display:"flex",alignItems:"center",height:SH}}>
-                  <div style={{width:40,fontSize:"9px",color:"#888",textAlign:"right",paddingRight:8,flexShrink:0,letterSpacing:1}}>{SNAMES[si]}</div>
+                  <div style={{width:40,fontSize:"9px",color:"#aaa",textAlign:"right",paddingRight:8,flexShrink:0,letterSpacing:1}}>{SNAMES[si]}</div>
                   {Array.from({length:NUM_FRETS+1},(_,fret)=>{
                     const {bg,fg,ring,size,shape,label}=getDotStyle(si,fret);
                     const br=shape==="square"?3:size/2;
@@ -302,7 +302,7 @@ function GuitarApp(){
       </div>
 
       <div style={{borderTop:"1px solid #141414",padding:"7px 20px",display:"flex",gap:10,alignItems:"flex-start",background:"#080808",flexShrink:0,minHeight:36}}>
-        <div style={{fontSize:"8px",color:"#777",letterSpacing:2,paddingTop:2,flexShrink:0,fontFamily:"'Courier New',monospace",minWidth:40}}>COACH</div>
+        <div style={{fontSize:"8px",color:"#999",letterSpacing:2,paddingTop:2,flexShrink:0,fontFamily:"'Courier New',monospace",minWidth:40}}>COACH</div>
         <div style={{fontSize:"10px",color:"#d0ccbc",lineHeight:1.6,fontStyle:"italic",fontFamily:"'Courier New',monospace"}}>{coachText}</div>
       </div>
 
