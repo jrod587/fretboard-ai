@@ -159,12 +159,12 @@ function WaitlistModal({onClose,accent}){
           <div style={{display:"inline-block",background:`${accent}22`,border:`1px solid ${accent}55`,color:accent,fontSize:"9px",letterSpacing:2,fontWeight:700,padding:"3px 10px",borderRadius:20,fontFamily:"'Courier New',monospace"}}>JOIN THE WAITLIST</div>
         </div>
         <div style={{fontSize:20,fontWeight:700,color:"#e8e0d0",textAlign:"center",marginBottom:8,lineHeight:1.25}}>The Full AI Coach is Coming</div>
-        <p style={{color:"#bbb",lineHeight:1.7,textAlign:"center",marginBottom:20,fontSize:12}}>Be first in line for the most personal guitar training tool ever built. Founder spots are limited — lock yours in now.</p>
+        <p style={{color:"#bbb",lineHeight:1.7,textAlign:"center",marginBottom:20,fontSize:13,fontFamily:"system-ui,-apple-system,sans-serif"}}>Be first in line for the most personal guitar training tool ever built. Founder spots are limited — lock yours in now.</p>
         <div style={{marginBottom:22,padding:"14px 16px",background:"rgba(255,255,255,0.03)",borderRadius:8,border:"1px solid rgba(255,255,255,0.06)"}}>
           {features.map((f,i)=>(
             <div key={i} style={{display:"flex",gap:10,marginBottom:i<features.length-1?8:0,alignItems:"flex-start"}}>
               <span style={{color:accent,fontWeight:700,flexShrink:0,marginTop:1}}>✓</span>
-              <span style={{color:"#aaa",fontSize:12,lineHeight:1.5}}>{f}</span>
+              <span style={{color:"#aaa",fontSize:12,lineHeight:1.5,fontFamily:"system-ui,-apple-system,sans-serif"}}>{f}</span>
             </div>
           ))}
         </div>
