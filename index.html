@@ -111,24 +111,24 @@ function WaitlistStrip({accent}){
   return (
     <div style={{borderTop:"1px solid #141414",padding:"8px 20px 10px",background:"#080808",flexShrink:0}}>
       <div style={{display:"flex",gap:14,alignItems:"center",flexWrap:"wrap",marginBottom:6}}>
-        <span style={{fontSize:"7px",color:"#888",letterSpacing:2,fontFamily:"'Courier New',monospace",whiteSpace:"nowrap"}}>COMING SOON</span>
+        <span style={{fontSize:"10px",color:"#aaa",letterSpacing:2,fontFamily:"'Courier New',monospace",whiteSpace:"nowrap"}}>COMING SOON</span>
         {WAITLIST_FEATURES.map((f,i)=>(
-          <span key={i} style={{display:"flex",alignItems:"center",gap:4,fontSize:"8px",color:"#777",fontFamily:"'Courier New',monospace",whiteSpace:"nowrap"}}>
-            <span style={{fontSize:"9px"}}>{f.icon}</span>{f.label}
+          <span key={i} style={{display:"flex",alignItems:"center",gap:4,fontSize:"11px",color:"#999",fontFamily:"system-ui,-apple-system,sans-serif",whiteSpace:"nowrap"}}>
+            <span style={{fontSize:"12px"}}>{f.icon}</span>{f.label}
           </span>
         ))}
       </div>
       {status==="success"?(
-        <div style={{fontSize:"9px",color:accent,fontFamily:"'Courier New',monospace",letterSpacing:"0.5px",opacity:0.8}}>✓ You're on the list. We'll reach out when it's ready.</div>
+        <div style={{fontSize:"11px",color:accent,fontFamily:"system-ui,-apple-system,sans-serif",letterSpacing:"0.5px",opacity:0.9}}>✓ You're on the list. We'll reach out when it's ready.</div>
       ):(
         <>
           <form onSubmit={submit} style={{display:"flex",gap:6,alignItems:"center"}}>
-            <input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="get early access" disabled={status==="loading"} style={{flex:1,background:"#0d0d0d",border:`1px solid ${status==="error"?"#6b2020":"#1c1c1c"}`,borderRadius:2,color:"#888",padding:"5px 10px",fontSize:"9px",fontFamily:"'Courier New',monospace",outline:"none",minWidth:0}}/>
-            <button type="submit" disabled={status==="loading"} style={{padding:"5px 12px",borderRadius:2,border:`1px solid ${accent}33`,background:"transparent",color:`${accent}99`,fontSize:"8px",cursor:"pointer",fontFamily:"'Courier New',monospace",letterSpacing:1,flexShrink:0,opacity:status==="loading"?0.5:1}}>{status==="loading"?"···":"NOTIFY ME"}</button>
-            {status==="dupe"&&<span style={{fontSize:"8px",color:"#555",fontFamily:"'Courier New',monospace",flexShrink:0}}>already on the list</span>}
-            {status==="error"&&<span style={{fontSize:"8px",color:"#7a2020",fontFamily:"'Courier New',monospace",flexShrink:0}}>try again</span>}
+            <input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="get early access" disabled={status==="loading"} style={{flex:1,background:"#0d0d0d",border:`1px solid ${status==="error"?"#6b2020":"#2a2a2a"}`,borderRadius:2,color:"#bbb",padding:"5px 10px",fontSize:"11px",fontFamily:"system-ui,-apple-system,sans-serif",outline:"none",minWidth:0}}/>
+            <button type="submit" disabled={status==="loading"} style={{padding:"5px 12px",borderRadius:2,border:`1px solid ${accent}55`,background:"transparent",color:accent,fontSize:"10px",cursor:"pointer",fontFamily:"'Courier New',monospace",letterSpacing:1,flexShrink:0,opacity:status==="loading"?0.5:1}}>{status==="loading"?"···":"NOTIFY ME"}</button>
+            {status==="dupe"&&<span style={{fontSize:"10px",color:"#888",fontFamily:"system-ui,-apple-system,sans-serif",flexShrink:0}}>already on the list</span>}
+            {status==="error"&&<span style={{fontSize:"10px",color:"#c05040",fontFamily:"system-ui,-apple-system,sans-serif",flexShrink:0}}>try again</span>}
           </form>
-          <div style={{marginTop:2,fontSize:"7px",color:"#383838",fontFamily:"'Courier New',monospace"}}>No spam. Unsubscribe anytime.</div>
+          <div style={{marginTop:2,fontSize:"10px",color:"#777",fontFamily:"system-ui,-apple-system,sans-serif"}}>No spam. Unsubscribe anytime.</div>
         </>
       )}
     </div>
@@ -172,7 +172,7 @@ function WaitlistModal({onClose,accent}){
           <div style={{textAlign:"center",padding:"16px",marginBottom:12}}>
             <div style={{fontSize:28,marginBottom:8}}>🌱</div>
             <div style={{fontSize:14,fontWeight:700,color:"#e8e0d0",marginBottom:4}}>You're in.</div>
-            <div style={{fontSize:11,color:"#888",fontFamily:"'Courier New',monospace"}}>We'll reach out the moment it drops. No spam — ever.</div>
+            <div style={{fontSize:12,color:"#aaa",fontFamily:"system-ui,-apple-system,sans-serif"}}>We'll reach out the moment it drops. No spam — ever.</div>
           </div>
         ):(
           <form onSubmit={wlSubmit} style={{marginBottom:12}}>
@@ -182,10 +182,10 @@ function WaitlistModal({onClose,accent}){
             </div>
             {wlStatus==="dupe"&&<div style={{fontSize:"10px",color:"#888",fontFamily:"'Courier New',monospace",textAlign:"center"}}>Already on the list. You're good. ✓</div>}
             {wlStatus==="error"&&<div style={{fontSize:"10px",color:"#7a2020",fontFamily:"'Courier New',monospace",textAlign:"center"}}>Something went wrong — try again.</div>}
-            <div style={{marginTop:6,fontSize:"9px",color:"#444",fontFamily:"'Courier New',monospace",textAlign:"center"}}>No spam. Unsubscribe anytime. Your email is never shared.</div>
+            <div style={{marginTop:6,fontSize:"11px",color:"#777",fontFamily:"system-ui,-apple-system,sans-serif",textAlign:"center"}}>No spam. Unsubscribe anytime. Your email is never shared.</div>
           </form>
         )}
-        <div style={{textAlign:"center"}}><button onClick={onClose} style={{background:"none",border:"none",cursor:"pointer",color:"#444",fontSize:11,fontFamily:"'Courier New',monospace"}}>Continue with free fretboard</button></div>
+        <div style={{textAlign:"center"}}><button onClick={onClose} style={{background:"none",border:"none",cursor:"pointer",color:"#888",fontSize:12,fontFamily:"system-ui,-apple-system,sans-serif"}}>Continue with free fretboard</button></div>
       </div>
     </div>
   );
@@ -196,15 +196,15 @@ function PrivacyModal({onClose}){
     <div style={{position:"fixed",inset:0,zIndex:9999,background:"rgba(0,0,0,0.85)",display:"flex",alignItems:"center",justifyContent:"center",padding:"20px",backdropFilter:"blur(8px)"}}>
       <div style={{background:"rgba(12,10,8,0.98)",border:"1px solid #2a2a2a",borderRadius:12,padding:"28px 32px",maxWidth:480,width:"100%",position:"relative",maxHeight:"80vh",overflowY:"auto"}}>
         <button onClick={onClose} style={{position:"absolute",top:12,right:14,background:"none",border:"none",cursor:"pointer",color:"#555",fontSize:18,lineHeight:1,padding:"2px 6px"}}>✕</button>
-        <div style={{fontSize:14,fontWeight:700,color:"#e8e0d0",marginBottom:16,fontFamily:"'Courier New',monospace",letterSpacing:1}}>PRIVACY POLICY</div>
-        <div style={{fontSize:11,color:"#888",lineHeight:1.8,fontFamily:"'Courier New',monospace"}}>
+        <div style={{fontSize:15,fontWeight:700,color:"#f0ead6",marginBottom:16,fontFamily:"'Courier New',monospace",letterSpacing:2}}>PRIVACY POLICY</div>
+        <div style={{fontSize:13,color:"#aaa",lineHeight:1.8,fontFamily:"system-ui,-apple-system,sans-serif"}}>
           <p style={{marginBottom:12}}><span style={{color:"#aaa",fontWeight:700}}>What we collect:</span> Only your email address when you join the waitlist. Nothing else — no tracking, no analytics, no cookies.</p>
           <p style={{marginBottom:12}}><span style={{color:"#aaa",fontWeight:700}}>How we use it:</span> Solely to notify you when the AI trainer launches. We will never sell, rent, or share your email with any third party.</p>
           <p style={{marginBottom:12}}><span style={{color:"#aaa",fontWeight:700}}>Unsubscribe:</span> Reply to any email from us with "unsubscribe" and we'll remove you immediately.</p>
           <p style={{marginBottom:12}}><span style={{color:"#aaa",fontWeight:700}}>Data storage:</span> Emails are stored in Supabase (US-based). No payment data is collected on this site.</p>
           <p><span style={{color:"#aaa",fontWeight:700}}>Contact:</span> Questions? Reach us at <span style={{color:"#c8b87a"}}>hello@tonecrafted.com</span></p>
         </div>
-        <div style={{marginTop:20,textAlign:"center"}}><button onClick={onClose} style={{background:"none",border:"none",cursor:"pointer",color:"#444",fontSize:11,fontFamily:"'Courier New',monospace"}}>Close</button></div>
+        <div style={{marginTop:20,textAlign:"center"}}><button onClick={onClose} style={{background:"none",border:"none",cursor:"pointer",color:"#888",fontSize:12,fontFamily:"system-ui,-apple-system,sans-serif"}}>Close</button></div>
       </div>
     </div>
   );
@@ -258,19 +258,19 @@ function GuitarApp(){
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 20px 8px",borderBottom:"1px solid #181818",flexShrink:0}}>
         <div style={{display:"flex",alignItems:"baseline",gap:10}}>
           <span style={{fontSize:16,fontWeight:700,color:t.accent,letterSpacing:2}}>FRETBOARD AI</span>
-          <span style={{fontSize:"9px",color:"#aaa",letterSpacing:1}}>Standard Tuning · E A D G B e</span>
+          <span style={{fontSize:"11px",color:"#bbb",letterSpacing:1,fontFamily:"system-ui,-apple-system,sans-serif"}}>Standard Tuning · E A D G B e</span>
         </div>
         <div style={{display:"flex",alignItems:"center",gap:8}}>
           <div style={{display:"flex",gap:4,alignItems:"center"}}>
             {THEMES.map((th,i)=>(
               <button key={th.id} onClick={()=>setTheme(i)} title={`${th.name} — ${th.desc}`} style={{width:14,height:14,borderRadius:7,border:"none",cursor:"pointer",background:th.swatch,outline:themeIdx===i?"2px solid #fff":"2px solid transparent",outlineOffset:1,opacity:themeIdx===i?1:0.5}}/>
             ))}
-            <span style={{fontSize:"8px",color:"#444",marginLeft:2}}>{t.name}</span>
+            <span style={{fontSize:"10px",color:"#888",marginLeft:2,fontFamily:"system-ui,-apple-system,sans-serif"}}>{t.name}</span>
           </div>
           <div style={{width:1,height:12,background:"#222"}}/>
           <div style={{display:"flex",gap:4}}>
-            <button onClick={()=>setTab("scale")} style={{padding:"4px 10px",border:"none",cursor:"pointer",borderRadius:3,background:tab==="scale"?t.accent:"transparent",color:tab==="scale"?"#111":"#666",fontSize:"10px",fontFamily:"inherit",fontWeight:tab==="scale"?700:400}}>Scale View</button>
-            <button onClick={()=>setPremium(true)} style={{padding:"4px 10px",border:"none",cursor:"pointer",borderRadius:3,background:"transparent",color:"#555",fontSize:"10px",fontFamily:"inherit",display:"flex",alignItems:"center",gap:4}}><span style={{fontSize:"8px"}}>🔒</span>Trainer</button>
+            <button onClick={()=>setTab("scale")} style={{padding:"4px 10px",border:"none",cursor:"pointer",borderRadius:3,background:tab==="scale"?t.accent:"transparent",color:tab==="scale"?"#111":"#999",fontSize:"11px",fontFamily:"inherit",fontWeight:tab==="scale"?700:400}}>Scale View</button>
+            <button onClick={()=>setPremium(true)} style={{padding:"4px 10px",border:"none",cursor:"pointer",borderRadius:3,background:"transparent",color:"#888",fontSize:"11px",fontFamily:"inherit",display:"flex",alignItems:"center",gap:4}}><span style={{fontSize:"10px"}}>🔒</span>Trainer</button>
           </div>
         </div>
       </div>
@@ -279,37 +279,37 @@ function GuitarApp(){
         <div style={{padding:"8px 20px 6px",borderBottom:"1px solid #141414",flexShrink:0}}>
           <div style={{display:"flex",flexDirection:"column",gap:8}}>
             <div>
-              <div style={{fontSize:"10px",color:"#ccc",letterSpacing:2,marginBottom:4}}>KEY</div>
+              <div style={{fontSize:"11px",color:"#ddd",letterSpacing:2,marginBottom:4}}>KEY</div>
               <div style={{display:"flex",gap:3,flexWrap:"wrap",maxWidth:500}}>
                 {NOTES.map(n=>(
-                  <button key={n} onClick={()=>setRoot(n)} style={{width:27,height:27,borderRadius:2,border:"none",cursor:"pointer",background:root===n?t.accent:"#141414",color:root===n?"#111":"#aaa",fontSize:n.includes("#")?"6.5px":"10px",fontWeight:root===n?700:400,fontFamily:"inherit"}}>{n}</button>
+                  <button key={n} onClick={()=>setRoot(n)} style={{width:27,height:27,borderRadius:2,border:"none",cursor:"pointer",background:root===n?t.accent:"#141414",color:root===n?"#111":"#bbb",fontSize:n.includes("#")?"9px":"11px",fontWeight:root===n?700:400,fontFamily:"inherit"}}>{n}</button>
                 ))}
               </div>
             </div>
             <div>
-              <div style={{fontSize:"10px",color:"#ccc",letterSpacing:2,marginBottom:4}}>SCALE{scale===null&&<span style={{color:"#555",fontWeight:400,letterSpacing:0,fontSize:"7px"}}> · none selected</span>}</div>
+              <div style={{fontSize:"11px",color:"#ddd",letterSpacing:2,marginBottom:4}}>SCALE{scale===null&&<span style={{color:"#888",fontWeight:400,letterSpacing:0,fontSize:"10px"}}> · none selected</span>}</div>
               <div style={{display:"flex",gap:3,flexWrap:"wrap"}}>
                 {Object.keys(SCALES).map(s=>(
-                  <button key={s} onClick={()=>setSc(s===scale?null:s)} style={{padding:"2px 8px",border:"none",cursor:"pointer",borderRadius:2,background:scale===s?t.scaleBg:"#141414",color:scale===s?t.scaleFg:"#aaa",fontSize:"9px",fontFamily:"inherit",fontWeight:scale===s?700:400,outline:scale===s?`1px solid ${t.scaleBorder}`:"none"}}>{s}</button>
+                  <button key={s} onClick={()=>setSc(s===scale?null:s)} style={{padding:"2px 8px",border:"none",cursor:"pointer",borderRadius:2,background:scale===s?t.scaleBg:"#141414",color:scale===s?t.scaleFg:"#bbb",fontSize:"11px",fontFamily:"inherit",fontWeight:scale===s?700:400,outline:scale===s?`1px solid ${t.scaleBorder}`:"none"}}>{s}</button>
                 ))}
               </div>
             </div>
             <div style={{display:"flex",flexWrap:"wrap",gap:4,alignItems:"center"}}>
-              <button onClick={()=>setNm(x=>!x)} style={{padding:"2px 8px",border:`1px solid ${names?t.accent+"44":"#222"}`,background:"transparent",color:names?t.accent:"#888",cursor:"pointer",borderRadius:2,fontSize:"8px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap"}}>{names?"NAMES ON":"NAMES OFF"}</button>
-              <button onClick={()=>setIv(x=>!x)} style={{padding:"2px 8px",border:`1px solid ${showIv?t.accent+"44":"#222"}`,background:"transparent",color:showIv?t.accent:"#888",cursor:"pointer",borderRadius:2,fontSize:"8px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap"}}>INTERVALS {showIv?"ON":"OFF"}</button>
-              <button onClick={()=>setPremium(true)} style={{padding:"2px 8px",border:"1px solid #222",background:"transparent",color:"#555",cursor:"pointer",borderRadius:2,fontSize:"8px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:4}}><span style={{fontSize:"7px"}}>🔒</span>CAGED BOXES</button>
-              <button onClick={()=>setPremium(true)} style={{padding:"2px 8px",border:"1px solid #222",background:"transparent",color:"#555",cursor:"pointer",borderRadius:2,fontSize:"8px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:4}}><span style={{fontSize:"7px"}}>🔒</span>CHORD MAP</button>
+              <button onClick={()=>setNm(x=>!x)} style={{padding:"2px 8px",border:`1px solid ${names?t.accent+"44":"#222"}`,background:"transparent",color:names?t.accent:"#aaa",cursor:"pointer",borderRadius:2,fontSize:"10px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap"}}>{names?"NAMES ON":"NAMES OFF"}</button>
+              <button onClick={()=>setIv(x=>!x)} style={{padding:"2px 8px",border:`1px solid ${showIv?t.accent+"44":"#222"}`,background:"transparent",color:showIv?t.accent:"#aaa",cursor:"pointer",borderRadius:2,fontSize:"10px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap"}}>INTERVALS {showIv?"ON":"OFF"}</button>
+              <button onClick={()=>setPremium(true)} style={{padding:"2px 8px",border:"1px solid #333",background:"transparent",color:"#888",cursor:"pointer",borderRadius:2,fontSize:"10px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:4}}><span style={{fontSize:"9px"}}>🔒</span>CAGED BOXES</button>
+              <button onClick={()=>setPremium(true)} style={{padding:"2px 8px",border:"1px solid #333",background:"transparent",color:"#888",cursor:"pointer",borderRadius:2,fontSize:"10px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:4}}><span style={{fontSize:"9px"}}>🔒</span>CHORD MAP</button>
               <div style={{width:"100%",height:1,background:"#1a1a1a",margin:"1px 0"}}/>
-              <button onClick={()=>setNV(v=>v==="all"?null:"all")} style={{padding:"2px 8px",border:`1px solid ${noteView==="all"?t.natFg+"44":"#222"}`,background:noteView==="all"?t.natBg:"transparent",color:noteView==="all"?t.natFg:"#888",cursor:"pointer",borderRadius:2,fontSize:"8px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap"}}>ALL NOTES</button>
-              <button onClick={()=>setNV(v=>v==="natural"?null:"natural")} style={{padding:"2px 8px",border:`1px solid ${noteView==="natural"?t.natFg+"44":"#222"}`,background:noteView==="natural"?t.natBg:"transparent",color:noteView==="natural"?t.natFg:"#888",cursor:"pointer",borderRadius:2,fontSize:"8px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap"}}>NATURALS</button>
-              <button onClick={()=>setNV(v=>v==="bare"?null:"bare")} style={{padding:"2px 8px",border:`1px solid ${noteView==="bare"?"#55555544":"#222"}`,background:noteView==="bare"?"#111":"transparent",color:noteView==="bare"?"#aaa":"#888",cursor:"pointer",borderRadius:2,fontSize:"8px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap"}}>BARE</button>
+              <button onClick={()=>setNV(v=>v==="all"?null:"all")} style={{padding:"2px 8px",border:`1px solid ${noteView==="all"?t.natFg+"44":"#222"}`,background:noteView==="all"?t.natBg:"transparent",color:noteView==="all"?t.natFg:"#aaa",cursor:"pointer",borderRadius:2,fontSize:"10px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap"}}>ALL NOTES</button>
+              <button onClick={()=>setNV(v=>v==="natural"?null:"natural")} style={{padding:"2px 8px",border:`1px solid ${noteView==="natural"?t.natFg+"44":"#222"}`,background:noteView==="natural"?t.natBg:"transparent",color:noteView==="natural"?t.natFg:"#aaa",cursor:"pointer",borderRadius:2,fontSize:"10px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap"}}>NATURALS</button>
+              <button onClick={()=>setNV(v=>v==="bare"?null:"bare")} style={{padding:"2px 8px",border:`1px solid ${noteView==="bare"?"#55555544":"#222"}`,background:noteView==="bare"?"#111":"transparent",color:noteView==="bare"?"#bbb":"#aaa",cursor:"pointer",borderRadius:2,fontSize:"10px",fontFamily:"inherit",letterSpacing:1,whiteSpace:"nowrap"}}>BARE</button>
             </div>
           </div>
         </div>
       )}
 
       {tab==="scale"&&(
-        <div style={{padding:"3px 20px",fontSize:"8px",color:"#aaa",letterSpacing:"0.8px",flexShrink:0,display:"flex",justifyContent:"space-between"}}>
+        <div style={{padding:"3px 20px",fontSize:"10px",color:"#bbb",letterSpacing:"0.8px",flexShrink:0,display:"flex",justifyContent:"space-between",fontFamily:"system-ui,-apple-system,sans-serif"}}>
           <span>← scroll for full 24-fret neck · O = open · gold bar = NUT</span>
           {noteView==="all"&&<span style={{color:"#6aaa6a"}}>ALL NOTES — gold=root · green=natural · blue=sharp/flat</span>}
           {noteView==="natural"&&<span style={{color:"#6aaa6a"}}>NATURALS — A B C D E F G only · gold=root</span>}
@@ -323,12 +323,12 @@ function GuitarApp(){
             <div style={{minWidth:(NUM_FRETS+1)*FW+44,position:"relative"}}>
               <div style={{display:"flex",paddingLeft:40,marginBottom:3}}>
                 {Array.from({length:NUM_FRETS+1},(_,f)=>(
-                  <div key={f} style={{width:FW,flexShrink:0,textAlign:"center",fontSize:"9px",color:DOT.has(f)?"#c8b87a":"#bbb",fontWeight:DOT.has(f)?700:400}}>{f===0?"○":f}</div>
+                  <div key={f} style={{width:FW,flexShrink:0,textAlign:"center",fontSize:"10px",color:DOT.has(f)?"#c8b87a":"#ccc",fontWeight:DOT.has(f)?700:400}}>{f===0?"○":f}</div>
                 ))}
               </div>
               {OPEN.map((_,si)=>(
                 <div key={si} style={{display:"flex",alignItems:"center",height:SH}}>
-                  <div style={{width:40,fontSize:"11px",color:"#bbb",textAlign:"right",paddingRight:8,flexShrink:0,letterSpacing:1}}>{SNAMES[si]}</div>
+                  <div style={{width:40,fontSize:"12px",color:"#ddd",textAlign:"right",paddingRight:8,flexShrink:0,letterSpacing:1}}>{SNAMES[si]}</div>
                   {Array.from({length:NUM_FRETS+1},(_,fret)=>{
                     const {bg,fg,ring,size,shape,label}=getDotStyle(si,fret);
                     const br=shape==="square"?3:size/2;
@@ -354,35 +354,35 @@ function GuitarApp(){
       </div>
 
       <div style={{borderTop:"1px solid #141414",padding:"7px 20px",display:"flex",gap:10,alignItems:"flex-start",background:"#080808",flexShrink:0,minHeight:36}}>
-        <div style={{fontSize:"8px",color:"#bbb",letterSpacing:2,paddingTop:2,flexShrink:0,fontFamily:"'Courier New',monospace",minWidth:40}}>COACH</div>
-        <div style={{fontSize:"10px",color:"#d0ccbc",lineHeight:1.6,fontStyle:"italic",fontFamily:"'Courier New',monospace"}}>{coachText}</div>
+        <div style={{fontSize:"10px",color:"#ccc",letterSpacing:2,paddingTop:2,flexShrink:0,fontFamily:"'Courier New',monospace",minWidth:40}}>COACH</div>
+        <div style={{fontSize:"13px",color:"#e0dcd0",lineHeight:1.6,fontStyle:"italic",fontFamily:"system-ui,-apple-system,sans-serif"}}>{coachText}</div>
       </div>
 
       <WaitlistStrip accent={t.accent}/>
 
       <div style={{borderTop:"1px solid #141414",padding:"8px 20px",background:"#080808",flexShrink:0,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-        <div><span style={{fontSize:"8px",color:"#888",letterSpacing:2,fontFamily:"'Courier New',monospace"}}>TRAINER TIP </span><span style={{fontSize:"8px",color:"#666",fontFamily:"'Courier New',monospace"}}>· AI-powered</span></div>
-        <button onClick={()=>setPremium(true)} style={{padding:"3px 10px",borderRadius:20,border:`1px solid ${t.accent}55`,background:"transparent",color:t.accent,cursor:"pointer",fontSize:"9px",fontFamily:"'Courier New',monospace",letterSpacing:"0.5px"}}>🔒 Unlock tips</button>
+        <div><span style={{fontSize:"10px",color:"#aaa",letterSpacing:2,fontFamily:"'Courier New',monospace"}}>TRAINER TIP </span><span style={{fontSize:"10px",color:"#888",fontFamily:"system-ui,-apple-system,sans-serif"}}>· AI-powered</span></div>
+        <button onClick={()=>setPremium(true)} style={{padding:"3px 10px",borderRadius:20,border:`1px solid ${t.accent}55`,background:"transparent",color:t.accent,cursor:"pointer",fontSize:"11px",fontFamily:"'Courier New',monospace",letterSpacing:"0.5px"}}>🔒 Unlock tips</button>
       </div>
 
       <div style={{background:"#060606",borderTop:"1px solid #181818",padding:"6px 12px 8px",flexShrink:0}}>
         <div style={{display:"flex",gap:3,flexWrap:"wrap",marginBottom:5}}>
           {[`Explain CAGED for ${root}`,`${root} ${scale||"Pentatonic Minor"} lick ideas`,"Chord tones vs passing tones","Connect the 5 boxes"].map((p,i)=>(
-            <button key={i} onClick={()=>setPremium(true)} style={{padding:"2px 7px",border:"1px solid #2a2a2a",borderRadius:2,background:"transparent",color:"#777",cursor:"pointer",fontSize:"8px",fontFamily:"inherit",letterSpacing:"0.3px",whiteSpace:"nowrap"}}>{p}</button>
+            <button key={i} onClick={()=>setPremium(true)} style={{padding:"2px 7px",border:"1px solid #333",borderRadius:2,background:"transparent",color:"#999",cursor:"pointer",fontSize:"10px",fontFamily:"system-ui,-apple-system,sans-serif",letterSpacing:"0.3px",whiteSpace:"nowrap"}}>{p}</button>
           ))}
         </div>
         <div style={{display:"flex",gap:7,alignItems:"center"}}>
-          <div onClick={()=>setPremium(true)} style={{flex:1,background:"#0e0e0e",border:"1px solid #1e1e1e",borderRadius:2,color:"#666",padding:"7px 13px",fontSize:11,cursor:"pointer",fontFamily:"inherit",userSelect:"none"}}>
+          <div onClick={()=>setPremium(true)} style={{flex:1,background:"#0e0e0e",border:"1px solid #2a2a2a",borderRadius:2,color:"#999",padding:"7px 13px",fontSize:13,cursor:"pointer",fontFamily:"system-ui,-apple-system,sans-serif",userSelect:"none"}}>
             Ask the coach about {root} {scale||"scales"}...
           </div>
-          <button onClick={()=>setPremium(true)} style={{padding:"7px 13px",borderRadius:2,border:`1px solid ${t.accent}44`,cursor:"pointer",background:"transparent",color:t.accent,fontSize:"9px",fontWeight:700,fontFamily:"inherit",letterSpacing:1,flexShrink:0}}>🔒 ASK</button>
+          <button onClick={()=>setPremium(true)} style={{padding:"7px 13px",borderRadius:2,border:`1px solid ${t.accent}55`,cursor:"pointer",background:"transparent",color:t.accent,fontSize:"11px",fontWeight:700,fontFamily:"inherit",letterSpacing:1,flexShrink:0}}>🔒 ASK</button>
         </div>
       </div>
 
       <div style={{textAlign:"center",padding:"5px 0 6px",borderTop:"1px solid #0e0e0e",background:"#080808",display:"flex",justifyContent:"center",alignItems:"center",gap:12}}>
-        <a href={SITE_URL} target="_blank" rel="noopener noreferrer" style={{fontSize:"9px",color:"#666",textDecoration:"none",letterSpacing:1,fontFamily:"'Courier New',monospace"}}>Created by JRod</a>
-        <span style={{color:"#2a2a2a",fontSize:"9px"}}>·</span>
-        <button onClick={()=>setPrivacy(true)} style={{background:"none",border:"none",cursor:"pointer",fontSize:"9px",color:"#444",fontFamily:"'Courier New',monospace",letterSpacing:1,padding:0}}>Privacy</button>
+        <a href={SITE_URL} target="_blank" rel="noopener noreferrer" style={{fontSize:"11px",color:"#888",textDecoration:"none",letterSpacing:1,fontFamily:"'Courier New',monospace"}}>Created by JRod</a>
+        <span style={{color:"#555",fontSize:"11px"}}>·</span>
+        <button onClick={()=>setPrivacy(true)} style={{background:"none",border:"none",cursor:"pointer",fontSize:"11px",color:"#999",fontFamily:"'Courier New',monospace",letterSpacing:1,padding:0}}>Privacy</button>
       </div>
     </div>
   );
