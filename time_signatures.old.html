@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pulse — Tonecrafted Time Signatures</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #080808;
+      --bg2:      #111111;
+      --bg3:      #1a1a1a;
+      --border:   #333333;
+      --gold:     #c8b87a;
+      --gold-dim: #8a7a50;
+      --text:     #e0d8c0;
+      --muted:    #a0a0a0;
+      --dim:      #777777;
+      --font:     'Courier New', Courier, monospace;
+    }
+
+    html, body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── layout ── */
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 32px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ── header ── */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--gold);
+    }
+    .badge {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+    .share-btn {
+      background: transparent;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: all 0.2s;
+    }
+    .share-btn:hover {
+      color: var(--text);
+      border-color: var(--text);
+    }
+
+    /* ── hero ── */
+    .hero {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 48px;
+      padding: 32px 0;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; gap: 40px; }
+    }
+    
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+    }
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: 4px;
+      color: var(--gold-dim);
+      margin-bottom: 12px;
+    }
+    .headline {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+    .headline em {
+      color: var(--gold);
+      font-style: normal;
+    }
+    .subhead {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    /* ── groove box ── */
+    .groove-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 48px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    /* ── controls ── */
+    .controls-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .sig-btn {
+      background: transparent;
+      border: 1px solid var(--dim);
+      color: var(--muted);
+      padding: 12px 20px;
+      font-family: var(--font);
+      font-size: 15px;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: all 0.2s;
+    }
+    .sig-btn:hover { border-color: var(--gold-dim); color: var(--text); }
+    .sig-btn.active { border-color: var(--gold); color: var(--gold); }
+
+    /* ── visualizer ── */
+    .pulse-container {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 32px;
+      height: 40px;
+      align-items: center;
+    }
+    .pulse-dot {
+      width: clamp(16px, 4vw, 28px);
+      height: clamp(16px, 4vw, 28px);
+      border-radius: 50%;
+      border: 2px solid var(--dim);
+      background: transparent;
+      transition: background 0.1s, box-shadow 0.1s, border-color 0.1s;
+    }
+    .pulse-dot.downbeat {
+      width: clamp(20px, 5vw, 36px);
+      height: clamp(20px, 5vw, 36px);
+    }
+    .pulse-dot.active {
+      background: var(--gold);
+      box-shadow: 0 0 12px var(--gold-dim);
+      border-color: var(--gold);
+    }
+    
+    /* ── playback ── */
+    .playback-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      width: 100%;
+      max-width: 500px;
+      justify-content: space-between;
+    }
+    .play-btn {
+      background: var(--gold);
+      color: #111;
+      border: none;
+      padding: 12px 32px;
+      font-family: var(--font);
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 3px;
+      cursor: pointer;
+      min-width: 110px;
+    }
+    .play-btn:hover { opacity: 0.9; }
+
+    .tempo-slider-wrap {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .tempo-label {
+      font-size: 13px;
+      color: var(--dim);
+      margin-bottom: 10px;
+      letter-spacing: 1.5px;
+    }
+    .tempo-slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      outline: none;
+    }
+    .tempo-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--gold);
+      cursor: pointer;
+    }
+
+    /* ── info section ── */
+    .info-section {
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+    }
+    .info-title {
+      font-size: 20px;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .info-text {
+      font-size: 16px;
+      color: var(--text);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .info-examples-label {
+      font-size: 12px;
+      letter-spacing: 3px;
+      color: var(--dim);
+      margin-bottom: 12px;
+    }
+    .info-examples {
+      list-style-type: none;
+    }
+    .info-examples li {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 10px;
+      position: relative;
+      padding-left: 16px;
+    }
+    .info-examples li::before {
+      content: '>';
+      position: absolute;
+      left: 0;
+      color: var(--gold-dim);
+    }
+    .info-practice {
+      margin-top: 32px;
+      padding: 16px 20px;
+      background: var(--bg3);
+      border-left: 3px solid var(--gold);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.6;
+      border-radius: 0 4px 4px 0;
+    }
+    
+    /* ── cta section ── */
+    .cta-section {
+      margin-top: 64px;
+      margin-bottom: 64px;
+      padding: 48px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      text-align: center;
+    }
+    .cta-section h3 {
+      font-size: 24px;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .cta-section p {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+    .cta-form {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+    .cta-form input {
+      flex: 1;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px 16px;
+      border-radius: 3px;
+      font-family: var(--font);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .cta-form input:focus {
+      border-color: var(--gold-dim);
+    }
+    .cta-form button {
+      background: var(--gold);
+      color: #111;
+      border: none;
+      padding: 12px 24px;
+      font-weight: 700;
+      border-radius: 3px;
+      cursor: pointer;
+      font-family: var(--font);
+      font-size: 14px;
+      transition: opacity 0.2s;
+    }
+    .cta-form button:hover {
+      opacity: 0.9;
+    }
+    @media (max-width: 600px) {
+      .cta-form { flex-direction: column; }
+    }
+    
+    /* ── footer ── */
+    .footer {
+      padding: 24px 0;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+    }
+    .footer-left, .footer-right {
+      font-size: 12px;
+      color: var(--dim);
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header class="header">
+    <a href="https://tonecrafted.com" class="logo" style="text-decoration: none; color: inherit;">TONECRAFTED</a>
+    <button class="badge share-btn" id="share-btn">COPY LINK</button>
+  </header>
+
+  <main class="hero">
+    
+    <div class="hero-left">
+      <div class="eyebrow">MASTER THE GROOVE</div>
+      <h1 class="headline">
+        Everything is just a <em>pulse</em>.
+      </h1>
+      <p class="subhead">
+        Don't let the math intimidate you. Before you worry about fractions, just listen to the engine. Feel how the groove pulls you, and you'll naturally understand what musicians mean when they talk about "time signatures".
+      </p>
+
+      <!-- Dynamic Info -->
+      <div class="info-section">
+        <h2 class="info-title" id="info-title">The March (4/4 Time)</h2>
+        <p class="info-text" id="info-text">
+          This is the bedrock of modern music. It feels like a steady, relentless march. When musicians say a song is in '4/4', they just mean there's a heavy pulse every 4 beats. It's the groove you already know by heart.
+        </p>
+        <div class="info-examples-label">ICONIC EXAMPLES</div>
+        <ul class="info-examples" id="info-examples">
+          <li>Smells Like Teen Spirit (Nirvana)</li>
+          <li>Knockin' on Heaven's Door (Bob Dylan)</li>
+          <li>Almost everything else on the radio</li>
+        </ul>
+        <div class="info-practice" id="info-practice">
+          <strong>PRACTICE:</strong> Try strumming a simple G chord on the '1' of every cycle.
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <!-- The Groove Box -->
+      <div class="groove-box">
+        <div class="controls-row" id="sig-controls">
+          <button class="sig-btn active" data-sig="4">The March (4/4)</button>
+          <button class="sig-btn" data-sig="3">The Circle (3/4)</button>
+          <button class="sig-btn" data-sig="6">The Sway (6/8)</button>
+          <button class="sig-btn" data-sig="5">The Tension (5/4)</button>
+        </div>
+
+        <div class="pulse-container" id="pulse-display">
+          <!-- Dots injected here -->
+        </div>
+
+        <div class="playback-row">
+          <button class="play-btn" id="play-btn">PLAY</button>
+          <div class="tempo-slider-wrap">
+            <div class="tempo-label" id="tempo-val">TEMPO: 90 BPM</div>
+            <input type="range" min="40" max="200" value="90" class="tempo-slider" id="tempo-slider">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Email Capture CTA -->
+  <section class="cta-section">
+    <h3>Unlock the Fretboard</h3>
+    <p>Want more elegant tools to map out the guitar? Join the Tonecrafted beta.</p>
+    <div class="cta-form">
+      <input type="email" placeholder="Your email address">
+      <button>Join Waitlist</button>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-left">© 2026 Tonecrafted</div>
+    <div class="footer-right">count.tonecrafted.com</div>
+  </footer>
+
+</div>
+
+<script>
+  // --- Data ---
+  const signatures = {
+    4: {
+      beats: 4,
+      title: "The March (4/4 Time)",
+      text: "This is the bedrock of modern music. It feels like a steady, relentless march. When musicians say a song is in '4/4', they just mean there's a heavy pulse every 4 beats. It's the groove you already know by heart.",
+      examples: [
+        "Smells Like Teen Spirit (Nirvana)",
+        "Knockin' on Heaven's Door (Bob Dylan)",
+        "Almost everything else on the radio"
+      ],
+      practice: "Try strumming a simple G chord on the '1' of every cycle."
+    },
+    3: {
+      beats: 3,
+      title: "The Circle (3/4 Time)",
+      text: "Notice how this feels like it's spinning? It has a natural, rolling sway to it that makes you want to rock back and forth. This is the classic 'waltz' feel.",
+      examples: [
+        "Piano Man (Billy Joel)",
+        "Hallelujah (Leonard Cohen)",
+        "Manic Depression (Jimi Hendrix)"
+      ],
+      practice: "Try picking the bass note on the '1', and strumming the rest of the chord on '2' and '3'."
+    },
+    6: {
+      beats: 6,
+      title: "The Sway (6/8 Time)",
+      text: "This pulls you side to side. It feels a lot like the waltz (3/4), but it's heavier and drags a bit more. It's usually felt as two big, sweeping motions. It feels like a heartbeat in a dark room.",
+      examples: [
+        "House of the Rising Sun (The Animals)",
+        "We Are The Champions (Queen)",
+        "Nothing Else Matters (Metallica)"
+      ],
+      practice: "Arpeggiate a chord: pick the bass note on the '1', then pluck two other strings on '2' and '3'."
+    },
+    5: {
+      beats: 5,
+      title: "The Tension (5/4 Time)",
+      text: "It feels like walking with a limp. It never quite resolves when your brain expects it to, which keeps the listener constantly on edge. It's built by slamming a 3-beat groove and a 2-beat groove together.",
+      examples: [
+        "Take Five (Dave Brubeck)",
+        "Mission Impossible Theme",
+        "15 Step (Radiohead)"
+      ],
+      practice: "Strum your chord firmly on the '1', let it ring for 3 beats, then do a quick mute scratch on the 2-beat turnaround."
+    }
+  };
+
+  // --- State ---
+  let currentSig = 4;
+  let bpm = 90;
+  let isPlaying = false;
+  let currentStep = 0;
+  let nextNoteTime = 0;
+  let timerID;
+
+  // --- Audio Context ---
+  let audioCtx;
+  const initAudio = () => {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+  };
+
+  // --- UI Elements ---
+  const pulseDisplay = document.getElementById('pulse-display');
+  const playBtn = document.getElementById('play-btn');
+  const tempoSlider = document.getElementById('tempo-slider');
+  const tempoVal = document.getElementById('tempo-val');
+  const sigBtns = document.querySelectorAll('.sig-btn');
+
+  const infoTitle = document.getElementById('info-title');
+  const infoText = document.getElementById('info-text');
+  const infoExamples = document.getElementById('info-examples');
+
+  // --- UI Updates ---
+  function renderDots() {
+    pulseDisplay.innerHTML = '';
+    const beats = signatures[currentSig].beats;
+    for (let i = 0; i < beats; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'pulse-dot' + (i === 0 ? ' downbeat' : '');
+      dot.id = 'dot-' + i;
+      pulseDisplay.appendChild(dot);
+    }
+  }
+
+  function updateInfo() {
+    const data = signatures[currentSig];
+    infoTitle.textContent = data.title;
+    infoText.textContent = data.text;
+    infoExamples.innerHTML = data.examples.map(ex => `<li>${ex}</li>`).join('');
+    document.getElementById('info-practice').innerHTML = `<strong>PRACTICE:</strong> ${data.practice}`;
+  }
+
+  function highlightDot(step) {
+    document.querySelectorAll('.pulse-dot').forEach(d => d.classList.remove('active'));
+    const activeDot = document.getElementById('dot-' + step);
+    if (activeDot) activeDot.classList.add('active');
+  }
+
+  // --- Audio Scheduling (Web Audio API) ---
+  const lookahead = 25.0; // ms
+  const scheduleAheadTime = 0.1; // s
+
+  function nextNote() {
+    const secondsPerBeat = 60.0 / bpm;
+    nextNoteTime += secondsPerBeat;
+    currentStep++;
+    if (currentStep >= signatures[currentSig].beats) {
+      currentStep = 0;
+    }
+  }
+
+  function playTone(time, isDownbeat) {
+    const osc = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    
+    osc.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    
+    // Downbeat gets a deeper, louder tone
+    if (isDownbeat) {
+      osc.frequency.value = 400; // Hz
+      gainNode.gain.setValueAtTime(0.8, time);
+    } else {
+      osc.frequency.value = 800;
+      gainNode.gain.setValueAtTime(0.4, time);
+    }
+    
+    // Envelope to make it a short "tick"
+    gainNode.gain.exponentialRampToValueAtTime(0.001, time + 0.1);
+    
+    osc.start(time);
+    osc.stop(time + 0.1);
+  }
+
+  function scheduler() {
+    while (nextNoteTime < audioCtx.currentTime + scheduleAheadTime) {
+      // Schedule visual update (using setTimeout to match audio time roughly)
+      const stepToHighlight = currentStep;
+      const timeToPlay = nextNoteTime;
+      const timeMs = (timeToPlay - audioCtx.currentTime) * 1000;
+      
+      setTimeout(() => {
+        if (isPlaying) highlightDot(stepToHighlight);
+      }, Math.max(0, timeMs));
+
+      // Schedule audio
+      playTone(timeToPlay, currentStep === 0);
+      nextNote();
+    }
+    timerID = window.setTimeout(scheduler, lookahead);
+  }
+
+  // --- Controls ---
+  playBtn.addEventListener('click', () => {
+    initAudio();
+    if (!isPlaying) {
+      isPlaying = true;
+      currentStep = 0;
+      nextNoteTime = audioCtx.currentTime + 0.05;
+      scheduler();
+      playBtn.textContent = 'STOP';
+      playBtn.style.background = 'var(--dim)';
+      playBtn.style.color = 'var(--text)';
+    } else {
+      isPlaying = false;
+      window.clearTimeout(timerID);
+      playBtn.textContent = 'PLAY';
+      playBtn.style.background = 'var(--gold)';
+      playBtn.style.color = '#111';
+      document.querySelectorAll('.pulse-dot').forEach(d => d.classList.remove('active'));
+    }
+  });
+
+  tempoSlider.addEventListener('input', (e) => {
+    bpm = parseInt(e.target.value);
+    tempoVal.textContent = `TEMPO: ${bpm} BPM`;
+  });
+
+  sigBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      // UI toggle
+      sigBtns.forEach(b => b.classList.remove('active'));
+      e.target.classList.add('active');
+      
+      // State update
+      currentSig = parseInt(e.target.dataset.sig);
+      currentStep = 0; // reset beat
+      
+      // Render
+      renderDots();
+      updateInfo();
+    });
+  });
+
+  // Share Button
+  document.getElementById('share-btn').addEventListener('click', (e) => {
+    navigator.clipboard.writeText(window.location.href);
+    e.target.textContent = "COPIED!";
+    setTimeout(() => { e.target.textContent = "COPY LINK"; }, 2000);
+  });
+
+  // Init
+  renderDots();
+  updateInfo();
+
+</script>
+</body>
+</html>

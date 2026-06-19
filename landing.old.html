@@ -273,10 +273,14 @@
 <body>
 <div class="page">
 
-  <!-- Header -->
   <header class="header">
     <div class="logo">FRETBOARD AI</div>
-    <div class="badge">COMING SOON</div>
+    <div style="display: flex; gap: 16px; align-items: center;">
+      <a href="/count-app/index.html" style="color: var(--muted); text-decoration: none; font-size: 10px; font-family: system-ui, sans-serif; transition: color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Pulse</a>
+      <a href="/local_copilot.html" style="color: var(--muted); text-decoration: none; font-size: 10px; font-family: system-ui, sans-serif; transition: color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Song Copilot</a>
+      <a href="/harmony.html" style="color: var(--muted); text-decoration: none; font-size: 10px; font-family: system-ui, sans-serif; transition: color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Path</a>
+      <div class="badge">COMING SOON</div>
+    </div>
   </header>
 
   <!-- Hero -->
@@ -325,6 +329,19 @@
 
     <hr class="divider"/>
 
+    <!-- Beginner Path -->
+    <div class="features-label">NEW TO GUITAR? START HERE</div>
+    <div style="background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 20px; margin-bottom: 48px;">
+      <p style="font-size: 13px; color: var(--text); margin-bottom: 16px; line-height: 1.6;">
+        New to guitar? Start with Pulse to feel the beat, then Fretboard AI to learn the notes, then Path to see how they connect.
+      </p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="/count-app/index.html" class="teaser-link" style="border-color: var(--border); color: var(--text);">1. Pulse</a>
+        <a href="/index.html" class="teaser-link">2. Fretboard AI</a>
+        <a href="/harmony.html" class="teaser-link" style="border-color: var(--border); color: var(--text);">3. Path</a>
+      </div>
+    </div>
+
     <!-- Features -->
     <div class="features-label">WHAT'S COMING</div>
     <div class="features-grid">
@@ -354,10 +371,10 @@
     <div class="fretboard-teaser">
       <div class="teaser-left">
         <div class="teaser-label">AVAILABLE NOW · FREE</div>
-        <div class="teaser-text">The interactive fretboard visualizer is live. CAGED boxes, scale overlay, chord voicings — no account required.</div>
+        <div class="teaser-text">The interactive fretboard visualizer is live. Learn the notes on the neck, visualize simple scales, and find your way around the fretboard — no account required.</div>
       </div>
-      <a class="teaser-link" href="https://jrodster0.gumroad.com/l/rvrjr" target="_blank" rel="noopener noreferrer">
-        TRY IT FREE →
+      <a class="teaser-link" href="/index.html">
+        TRY IT NOW →
       </a>
     </div>
 
